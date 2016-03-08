@@ -2,7 +2,7 @@
 return [
 
 	// null file memcached redis
-	'default' => env('LOCK_DRIVER', 'file'),
+	'default' => env('LOCK_DRIVER', 'redis'),
 
 	'stores' => [
 

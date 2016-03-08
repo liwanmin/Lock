@@ -16,7 +16,7 @@ composer require latrell/lock dev-master
 ```php
     'providers' => [
         // ...
-        'Latrell\Lock\LockServiceProvider',
+        Latrell\Lock\LockServiceProvider::class,
     ]
 ```
 
@@ -25,7 +25,7 @@ composer require latrell/lock dev-master
 ```php
     'aliases' => [
         // ...
-        'Lock' => 'Latrell\Lock\Facades\Lock',
+        'Lock' => Latrell\Lock\Facades\Lock::class,
     ]
 ```
 
