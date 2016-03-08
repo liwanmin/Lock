@@ -15,12 +15,26 @@ class LockServiceProvider extends ServiceProvider
 	protected $defer = true;
 
 	/**
+	 * Perform post-registration booting of services.
+	 *
+	 * @return void
+	 */
+	public function boot()
+	{
+		$this->publishes([
+			__DIR__ . '/../../config/config.php' => config_path('lock.php')
+		]);
+	}
+
+	/**
 	 * Register the service provider.
 	 *
 	 * @return void
 	 */
 	public function register()
 	{
+		$this->mergeConfigFrom(__DIR__ . '/../../config/config.php', 'lock');
+
 		$this->app->singleton('lock', function ($app) {
 			return new LockManager($app);
 		});
