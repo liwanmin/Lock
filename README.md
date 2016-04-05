@@ -3,7 +3,7 @@ Lock
 
 这是一个支持 Laravel 5 的并发锁拓展包。
 
-该模块在 Redis 与 Memcache 上实现了在锁机制。
+该模块在 Redis 与 Memcache 上实现了锁机制。
 
 注意：集群环境下，必须使用 Redis 驱动，否则由于 Memcache 的特性，锁可能出现上锁不准确的情况。
 
