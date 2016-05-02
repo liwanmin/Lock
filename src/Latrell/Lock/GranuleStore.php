@@ -11,6 +11,8 @@ abstract class GranuleStore
 		try {
 			if ($this->acquire($key)) {
 				$callback();
+			} else {
+				throw new \RuntimeException("acquire lock key {$key} timeout!");
 			}
 		} finally {
 			$this->release($key);
