@@ -1,5 +1,5 @@
 {
-    "name": "latrell/lock",
+    "name": "buykee/lock",
     "description": "支持Redis与Memcached的并发锁。",
     "keywords": ["Lock", "L5", "Laravel 5", "Laravel"],
     "license": "MIT",
