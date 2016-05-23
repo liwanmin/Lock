@@ -8,11 +8,11 @@ class ClearCommand extends Command
 {
 
 	/**
-	 * The console command name.
+	 * The name and signature of the console command.
 	 *
 	 * @var string
 	 */
-	protected $name = 'lock:clear {--timeout=300 : 超时时间，默认五分钟。} {--store= : 清理的仓库名称。}';
+	protected $signature = 'lock:clear {--timeout=300 : 超时时间，默认五分钟。} {--store= : 清理的仓库名称。}';
 
 	/**
 	 * The console command description.
