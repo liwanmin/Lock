@@ -2,6 +2,7 @@
 namespace Latrell\Lock;
 
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Carbon\Carbon;
 use RuntimeException;
 
@@ -88,10 +89,12 @@ class FileStore extends GranuleStore implements LockInterface
 		while (time() - $time < $this->max_timeout) {
 
 			// 删除超时的锁文件。
-			$current_value = $this->files->get($key);
-			if (! is_null($current_value) && $this->hasLockValueExpired($current_value)) {
-				$this->files->delete($file);
-			}
+			try {
+				$current_value = $this->files->get($key);
+				if (! is_null($current_value) && $this->hasLockValueExpired($current_value)) {
+					$this->files->delete($file);
+				}
+			} catch (FileNotFoundException $e) {}
 
 			// 检查锁文件是否存在。。
 			if (! $this->files->exists($file)) {

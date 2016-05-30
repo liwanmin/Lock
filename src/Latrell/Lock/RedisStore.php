@@ -2,8 +2,6 @@
 namespace Latrell\Lock;
 
 use Illuminate\Redis\Database as Redis;
-use Carbon\Carbon;
-use RuntimeException;
 
 class RedisStore extends GranuleStore implements LockInterface
 {
