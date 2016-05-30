@@ -138,12 +138,20 @@ class FileStore extends GranuleStore implements LockInterface
 			throw new RuntimeException('Attempting to release a lock that is not held');
 		}
 
-		$value = $this->files->get($key);
-		unset($this->expires_at[$name]); // 释放内存占用。
-		if (! $this->hasLockValueExpired($value)) {
-			$this->files->delete($key); // 释放锁。
-		} else {
-			trigger_error(sprintf('A PredisLock was not released before the timeout. Class: %s Lock Name: %s', get_class($this), $name), E_USER_WARNING);
+		// 取得锁文件路径。
+		$file = $this->directory . '/' . $key;
+
+		try {
+			$value = $this->files->get($file);
+
+			unset($this->expires_at[$name]); // 释放内存占用。
+			if (! $this->hasLockValueExpired($value)) {
+				$this->files->delete($file); // 释放锁。
+			} else {
+				trigger_error(sprintf('A FileLock was not released before the timeout. Class: %s Lock Name: %s', get_class($this), $name), E_USER_WARNING);
+			}
+		} catch (FileNotFoundException $e) {
+			trigger_error(sprintf('Attempting to release a lock that is not held. Class: %s Lock Name: %s', get_class($this), $name), E_USER_WARNING);
 		}
 	}
 
