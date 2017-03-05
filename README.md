@@ -79,3 +79,16 @@ try {
 	Lock::release($key);
 }
 ```
+
+### 中间件
+
+使用中间件的方式，让两个相同指纹的请求同步执行。
+
+找到 `app/Http/Kernel.php` 中的 `$routeMiddleware` 配置，添加中间件配置。
+
+```
+	protected $routeMiddleware = [
+		// ...
+		'synchronized' => \Latrell\Lock\Middleware\SynchronizationRequests::class,
+	];
+```
