@@ -1,7 +1,7 @@
 <?php
 namespace Latrell\Lock;
 
-use Illuminate\Redis\Database as Redis;
+use Illuminate\Redis\RedisManager;
 
 class RedisStore extends GranuleStore implements LockInterface
 {
@@ -50,7 +50,7 @@ class RedisStore extends GranuleStore implements LockInterface
 	 * @param  string  $connection
 	 * @return void
 	 */
-	public function __construct(Redis $redis, $prefix = '', $connection = 'default', $timeout = 30, $max_timeout = 300, $retry_wait_usec = 100000)
+	public function __construct(RedisManager $redis, $prefix = '', $connection = 'default', $timeout = 30, $max_timeout = 300, $retry_wait_usec = 100000)
 	{
 		$this->redis = $redis;
 		$this->setPrefix($prefix);
