@@ -17,6 +17,8 @@ composer require latrell/lock dev-master
 
 找到 `config/app.php` 配置文件中的 `providers` 键，注册服务提供者。
 
+（Laravel 5.5 以上版本可跳过该步骤）
+
 ```php
     'providers' => [
         // ...
