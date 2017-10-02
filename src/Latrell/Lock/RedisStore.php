@@ -73,15 +73,15 @@ class RedisStore extends GranuleStore implements LockInterface
 		$time = time();
 		while (time() - $time < $this->max_timeout) {
 			$lockValue = time() + $this->timeout;
-			if ($this->redis->set($key, $lockValue, "EX", $this->timeout, "NX")) {
+			if ($this->connection()->set($key, $lockValue, "EX", $this->timeout, "NX")) {
 				// 加锁成功。
 				return true;
 			}
 
 			// 未能加锁成功。
 			// 检查当前锁是否已过期，并重新锁定。
-			if ($this->redis->get($key) < time() && $this->redis->getset($key, $lockValue) < time()) {
-				$this->redis->expire($key, $this->timeout);
+			if ($this->connection()->get($key) < time() && $this->connection()->getset($key, $lockValue) < time()) {
+				$this->connection()->expire($key, $this->timeout);
 				return true;
 			}
 			usleep($this->retry_wait_usec);
@@ -98,8 +98,8 @@ class RedisStore extends GranuleStore implements LockInterface
 	{
 		$key = $this->getKey($name);
 
-		if($this->redis->ttl($key)) {
-			$this->redis->del($key);
+		if($this->connection()->ttl($key)) {
+			$this->connection()->del($key);
 		}
 	}
 
